@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaderboardTable matches snapshot 1`] = `
+<div>
+  <div
+    class="rounded-xl border border-zinc-300 bg-white p-4 shadow-sm"
+  >
+    <h2
+      class="mb-3 text-xl font-bold text-zinc-900"
+    >
+      Leaderboard
+    </h2>
+    <table
+      class="w-full border-collapse text-left"
+    >
+      <thead>
+        <tr>
+          <th
+            class="border-b border-zinc-300 py-2"
+          >
+            Rank
+          </th>
+          <th
+            class="border-b border-zinc-300 py-2"
+          >
+            Nickname
+          </th>
+          <th
+            class="border-b border-zinc-300 py-2"
+          >
+            Total Drinks
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          data-testid="leaderboard-row-1"
+        >
+          <td
+            class="border-b border-zinc-200 py-2"
+          >
+            1
+          </td>
+          <td
+            class="border-b border-zinc-200 py-2"
+          >
+            enzo
+          </td>
+          <td
+            class="border-b border-zinc-200 py-2"
+          >
+            3
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
