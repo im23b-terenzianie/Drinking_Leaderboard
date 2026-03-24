@@ -18,6 +18,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
+## Testing
+
+```bash
+# Unit + Integration + Snapshot + Coverage
+npm run test
+
+# CI mode
+npm run test:ci
+
+# Optional E2E
+npm run e2e
+```
+
+Stack:
+
+- Jest
+- React Testing Library
+- Cypress (optional E2E)
+
+Coverage-Gate ist auf mindestens 70% global gesetzt.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

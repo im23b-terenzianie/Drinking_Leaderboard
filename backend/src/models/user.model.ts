@@ -80,11 +80,11 @@ export class UserModel {
 
   // Delete user
   static async delete(id: number): Promise<boolean> {
-    const result = await query(
-      'DELETE FROM users WHERE id = $1',
+    const result = await query<{ id: number }>(
+      'DELETE FROM users WHERE id = $1 RETURNING id',
       [id]
     );
-    return (result as any).rowCount > 0;
+    return result.length > 0;
   }
 
   // Get all users (for admin purposes)
