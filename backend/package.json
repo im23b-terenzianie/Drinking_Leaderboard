@@ -1,0 +1,25 @@
+{
+  "name": "drinking-leaderboard-backend",
+  "version": "1.0.0",
+  "description": "Backend services and database logic for Drinking Leaderboard",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "db:migrate": "node scripts/migrate.js"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/pg": "^8.11.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
+    "typescript": "^5.3.3"
+  }
+}

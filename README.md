@@ -16,6 +16,7 @@ Drinking_Leaderboard/
 Das Frontend basiert auf Next.js mit React und TailwindCSS.
 
 **Entwicklungsserver starten:**
+
 ```bash
 cd frontend
 npm install
