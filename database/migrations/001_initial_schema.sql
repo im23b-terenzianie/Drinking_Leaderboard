@@ -1,4 +1,6 @@
--- Users Table
+-- Migration: Initial schema
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     nickname VARCHAR(50) UNIQUE NOT NULL,
@@ -8,7 +10,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE INDEX IF NOT EXISTS idx_users_nickname ON users(nickname);
 
--- Drinks Table
 CREATE TABLE IF NOT EXISTS drinks (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -18,3 +19,5 @@ CREATE TABLE IF NOT EXISTS drinks (
 );
 
 CREATE INDEX IF NOT EXISTS idx_drinks_user_id ON drinks(user_id);
+
+COMMIT;
