@@ -1,61 +1,26 @@
-import type { DrinkEntry, LeaderboardEntry, UserDrinkStats } from '../types/drink.types';
+import { queryOne } from '../db/connection';
+import { DrinkType, DRINK_POINTS, DrinkEntry } from '../types/drink.types';
+import { UserModel } from '../models/user.model';
 
-type UserLookup = { id: number; nickname: string };
+export const drinkService = {
+  async logDrink(userId: number, drinkType: DrinkType): Promise<DrinkEntry> {
+    const points = DRINK_POINTS[drinkType];
 
-export class DrinkService {
-  private entries: DrinkEntry[] = [];
-  private nextId = 1;
+    const row = await queryOne<{ id: number; user_id: number; drink_type: string; points: number; logged_at: Date }>(
+      `INSERT INTO drinks (user_id, drink_type, points) VALUES ($1, $2, $3) RETURNING *`,
+      [userId, drinkType, points]
+    );
 
-  addDrink(userId: number, drinkType: string, amount: number = 1): DrinkEntry {
-    const sanitizedType = drinkType.trim().toLowerCase();
-    if (!sanitizedType) {
-      throw new Error('Drink type is required');
-    }
-    if (amount <= 0 || !Number.isFinite(amount)) {
-      throw new Error('Amount must be greater than 0');
-    }
+    if (!row) throw new Error('Failed to log drink');
 
-    const entry: DrinkEntry = {
-      id: this.nextId++,
-      userId,
-      drinkType: sanitizedType,
-      amount,
-      consumedAt: new Date(),
-    };
-
-    this.entries.push(entry);
-    return entry;
-  }
-
-  getUserStats(userId: number): UserDrinkStats {
-    const userEntries = this.entries.filter((entry) => entry.userId === userId);
-
-    const byType = userEntries.reduce<Record<string, number>>((acc, entry) => {
-      acc[entry.drinkType] = (acc[entry.drinkType] || 0) + entry.amount;
-      return acc;
-    }, {});
+    await UserModel.addPoints(userId, points);
 
     return {
-      userId,
-      totalDrinks: userEntries.reduce((sum, entry) => sum + entry.amount, 0),
-      byType,
+      id: row.id,
+      userId: row.user_id,
+      drinkType: row.drink_type as DrinkType,
+      points: row.points,
+      loggedAt: row.logged_at,
     };
-  }
-
-  getLeaderboard(users: UserLookup[]): LeaderboardEntry[] {
-    return users
-      .map((user) => ({
-        userId: user.id,
-        nickname: user.nickname,
-        totalDrinks: this.getUserStats(user.id).totalDrinks,
-      }))
-      .sort((a, b) => b.totalDrinks - a.totalDrinks || a.nickname.localeCompare(b.nickname));
-  }
-
-  reset(): void {
-    this.entries = [];
-    this.nextId = 1;
-  }
-}
-
-export const drinkService = new DrinkService();
+  },
+};
