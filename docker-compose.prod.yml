@@ -20,16 +20,13 @@ services:
     image: ${FRONTEND_IMAGE:-drinking-leaderboard-frontend:latest}
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://backend:4000}
+      - "80:80"
     depends_on:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3000"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:80"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 15s
