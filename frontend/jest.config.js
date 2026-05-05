@@ -15,6 +15,7 @@ const customJestConfig = {
     '!**/*.test.js',
   ],
   coverageDirectory: 'coverage',
+  coverageReporters: ['lcov', 'text', 'clover'],
   coverageThreshold: {
     global: {
       branches: 70,

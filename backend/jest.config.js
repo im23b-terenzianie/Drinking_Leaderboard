@@ -13,6 +13,7 @@ module.exports = {
     '!src/db/connection.ts',
   ],
   coverageDirectory: 'coverage',
+  coverageReporters: ['lcov', 'text', 'clover'],
   coverageThreshold: {
     global: {
       branches: 70,
